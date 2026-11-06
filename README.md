@@ -22,16 +22,33 @@ change the mode with a tap on the earbuds.
 Everything happens over Bluetooth between the Mac and the earbuds. There is no account, no
 cloud and no network access.
 
+## Download
+
+1. Download `SoundcoreBar-<version>.dmg` from the
+   [latest release](https://github.com/saddadnabbil/soundcorebar/releases/latest).
+2. Open the DMG and drag **SoundcoreBar** onto **Applications**.
+3. Open SoundcoreBar from Applications. It appears in the menu bar, not in the Dock.
+
+The app isn't notarized by Apple (that needs a paid developer account), so the first launch
+is blocked with a message that Apple can't check it. To allow it once:
+
+- Open **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to
+  the SoundcoreBar message. Then open the app again and confirm.
+- Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/SoundcoreBar.app`
+
+After that it opens normally. The DMG works on both Apple Silicon and Intel Macs.
+
 ## Requirements
 
 - macOS 13 or later
-- Xcode Command Line Tools (`xcode-select --install`). Full Xcode is not needed.
 - The earbuds paired and connected to the Mac in System Settings → Bluetooth
+- To build from source: Xcode Command Line Tools (`xcode-select --install`). Full Xcode is
+  not needed.
 
 Only the R50i NC (A3959) is supported. Write controls are switched off automatically if the
 connected earbuds don't identify as an A3959.
 
-## Build and run
+## Build from source
 
 ```sh
 ./build.sh
@@ -43,6 +60,12 @@ The first time, macOS asks for Bluetooth permission. To start it at login, add
 
 If the panel says the control channel is unavailable, close the Soundcore app on your phone
 (it can hold the same channel) and press **Refresh**.
+
+To make a release DMG (universal binary for Apple Silicon and Intel):
+
+```sh
+./make_dmg.sh   # writes build/SoundcoreBar-<version>.dmg; the version comes from Info.plist
+```
 
 ## Tests
 
